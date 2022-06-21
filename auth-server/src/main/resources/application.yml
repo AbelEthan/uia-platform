@@ -1,0 +1,40 @@
+server:
+  port: 9000
+
+logging:
+  level:
+    root: INFO
+    org.springframework.web: INFO
+    org.springframework.security: INFO
+    org.springframework.security.oauth2: INFO
+#    org.springframework.boot.autoconfigure: DEBUG
+
+spring:
+  datasource:
+    driver-class-name: com.mysql.cj.jdbc.Driver
+    username: hjeduadmin
+    password: SuperhjEdu@2020
+    url: jdbc:mysql://39.100.229.199:3308/uia?useUnicode=true&useSSL=false&characterEncoding=UTF-8&allowMultiQueries=true&serverTimezone=Asia/Shanghai&zeroDateTimeBehavior=convertToNull
+  security:
+    oauth2:
+      resourceserver:
+        jwt:
+          issuer-uri: http://localhost:9000
+  thymeleaf:
+    cache: false
+  redis:
+    host: 39.100.229.199
+    port: 6379
+    password: Redis@2020
+    database: 15
+    jedis:
+      pool:
+        enabled: true
+        max-active: 8
+        max-idle: 8
+        max-wait: -1
+        min-idle: 0
+
+mybatis-plus:
+  type-aliases-package: com.uia.**.entity
+  mapper-locations: classpath*:com/uia/**/mappers/*Mapper.xml

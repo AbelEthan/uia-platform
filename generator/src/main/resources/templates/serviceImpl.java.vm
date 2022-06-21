@@ -1,0 +1,58 @@
+package ${package.ServiceImpl};
+
+import com.baomidou.mybatisplus.core.conditions.query.QueryWrapper;
+import com.baomidou.mybatisplus.core.metadata.IPage;
+import ${package.Entity}.${entity};
+import ${package.Mapper}.${table.mapperName};
+import ${package.Service}.${table.serviceName};
+import ${superServiceImplClassPackage};
+import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.stereotype.Service;
+
+/**
+ * Title: {@link ${table.serviceImplName} }
+ * Description: $!{table.comment} 服务实现类
+ *
+ * @author ${author}
+ * @email AbelEthan@126.com
+ * @date ${date}
+ */
+@Service
+public class ${table.serviceImplName} extends ${superServiceImplClass}<${table.mapperName}, ${entity}>implements ${table.serviceName} {
+
+@Autowired
+private ${table.mapperName} targetMapper;
+@Override
+public IPage<${entity}>findListPage(PageParams pageParams){
+    ${entity} query=pageParams.mapToObject(${entity}.class);
+        QueryWrapper<${entity}>queryWrapper=new QueryWrapper<>();
+        return targetMapper.selectPage(pageParams,queryWrapper);
+        }
+@Override
+public ${entity} find${entity}(Long id){
+    ${entity} entity=targetMapper.selectById(id);
+        return entity;
+        }
+@Override
+@DSTransactional
+public ${entity} add${entity}(${entity} entity){
+        targetMapper.insert(entity);
+        return entity;
+        }
+@Override
+@DSTransactional
+public Boolean update${entity}(${entity} entity){
+    ${entity} newEntity=find${entity}(entity.getId());
+
+        targetMapper.updateById(entity);
+        return Boolean.TRUE;
+        }
+@Override
+@DSTransactional
+public Boolean removeById(Long id){
+    ${entity} entity=find${entity}(id);
+
+        targetMapper.deleteById(id);
+        return Boolean.TRUE;
+        }
+        }

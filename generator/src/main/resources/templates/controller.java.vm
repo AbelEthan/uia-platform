@@ -1,0 +1,108 @@
+package ${package.Controller};
+
+import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.web.bind.annotation.*;
+
+import java.util.Map;
+
+import ${package.Entity}.${entity};
+import ${package.Service}.${table.serviceName};
+#if(${restControllerStyle})
+#else
+#end
+#if(${superControllerClassPackage})
+    ${superControllerClassPackage};
+#end
+
+/**
+ * Title: {@link ${table.controllerName} }
+ * Description: $!{table.comment} 前端控制器
+ *
+ * @author ${author}
+ * @email AbelEthan@126.com
+ * @date ${date}
+ */
+@Api(value = "$!{table.comment}API", tags = {"$!{table.comment}接口" })
+@RestController
+@RequestMapping("#if(${controllerMappingHyphenStyle})${controllerMappingHyphen}#else${table.entityPath}#end")
+public class ${table.controllerName}{
+
+@Autowired
+private ${table.serviceName} targetService;
+
+/**
+* 获取分页数据
+*
+* @param map
+* @return
+*/
+##@ApiOperation(value = "获取分页数据", notes = "获取分页数据")
+@ApiImplicitParams({
+        @ApiImplicitParam(name = "page", required = true, value = "页码", paramType = "query"),
+        @ApiImplicitParam(name = "limit", required = true, value = "显示条数", paramType = "query"),
+})
+@GetMapping(value = "/page")
+public RestResponse page(@RequestParam(required = false) Map map){
+        return success(targetService.findListPage(new PageParams(map)));
+        }
+
+/**
+ * 根据ID查找数据
+ *
+ * @param id
+ * @return
+ */
+##@ApiOperation(value = "根据ID查找数据", notes = "根据ID查找数据")
+@ApiImplicitParam(name = "id", required = true, value = "${table.comment}id", paramType = "path")
+@GetMapping("/id/{id}")
+public RestResponse get(@PathVariable("id") Long id){
+    ${entity} entity=targetService.find${entity}(id);
+        return success(entity);
+        }
+
+/**
+ * 添加数据
+ *
+ * @param ${table.entityPath}
+ * @return
+ */
+##@ApiOperation(value = "添加数据", notes = "添加数据")
+@ApiImplicitParam(name = "${table.entityPath}", required = true, value = "${table.comment}", paramType = "body", dataType = "${entity}${table.comment}对象")
+@PostMapping
+public RestResponse add(@RequestBody ${entity} ${table.entityPath}){
+
+        Long id=null;
+    ${entity} newEntity=targetService.add${entity}(${table.entityPath});
+        if (ObjectUtils.isNotEmpty(newEntity)){
+        id = newEntity.getId();
+        }
+        return success(id);
+        }
+
+/**
+ * 更新数据
+ *
+ * @param ${table.entityPath}
+ * @return
+ */
+##@ApiOperation(value = "更新数据", notes = "更新数据")
+@ApiImplicitParam(name = "${table.entityPath}", required = true, value = "${table.comment}", paramType = "body", dataType = "${entity}${table.comment}对象")
+@PutMapping
+public RestResponse update(@RequestBody ${entity} ${table.entityPath}){
+        return success(targetService.update${entity}(${table.entityPath}));
+        }
+
+/**
+* 删除数据
+*
+* @param id
+* @return
+*/
+##@ApiOperation(value = "删除数据", notes = "删除数据")
+@ApiImplicitParam(name = "id", required = true, value = "${table.comment}id", paramType = "path")
+@DeleteMapping("/id/{id}")
+public RestResponse remove(@PathVariable(value = "id") Long id){
+        return success(targetService.removeById(id));
+        }
+
+        }

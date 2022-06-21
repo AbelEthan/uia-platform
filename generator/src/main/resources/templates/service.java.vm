@@ -1,0 +1,58 @@
+package ${package.Service};
+
+import ${package.Entity}.${entity};
+import com.baomidou.mybatisplus.core.metadata.IPage;
+import ${superServiceClassPackage};
+
+/**
+ * Title: {@link ${table.serviceName} }
+ * Description: $!{table.comment} 服务类
+ *
+ * @author ${author}
+ * @email AbelEthan@126.com
+ * @date ${date}
+ */
+public interface ${table.serviceName} extends ${superServiceClass}<${entity}> {
+
+        /**
+         * $!{table.comment}分页查询
+         *
+         * @param pageParams
+         * @return
+         */
+        IPage<${entity}> findListPage(PageParams pageParams);
+
+        /**
+         * 根据主键获取$!{table.comment}
+         *
+         * @param id
+         * @return
+         */
+    ${entity} find${entity}(Long id);
+
+        /**
+         * 增加$!{table.comment}
+         *
+         * @param entity
+         * @return
+         */
+    ${entity} add${entity}(${entity} entity);
+
+        /**
+         * 更新$!{table.comment}
+         *
+         * @param entity
+         * @return
+         */
+        Boolean update${entity}(${entity} entity);
+
+        /**
+         * $!{table.comment}删除
+         *
+         * @param id
+         * @return
+         */
+        Boolean removeById(Long id);
+
+
+        }
